@@ -26,9 +26,11 @@ public class MovieController{
 
     @POST
     @Path("/{id}/review")
-    public void addReview(@PathParam("id") String id, Review review){
+    public String addReview(@PathParam("id") String id, Review review){
         review.setMovie_id(id);
-        MS.addReview(review);
+        if(MS.addReview(review))
+            return "Review added";
+        return "Error.";
     }
 
     @PUT
@@ -47,8 +49,10 @@ public class MovieController{
 
     @DELETE
     @Path("review/{id}")
-    public void delReview(@PathParam("id") int id){
-        MS.delReviewById(id);
+    public String delReview(@PathParam("id") int id){
+        if(MS.delReviewById(id))
+            return "Review deleted.";
+        return "Error.";
     }
 
     @GET

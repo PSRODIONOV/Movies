@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "loginServlet",urlPatterns = "/user/login")
 public class LoginServlet extends HttpServlet {
-    //service.UserStorageImpl US = service.UserStorageImpl.getInstance();
+
     @Autowired
     private UserStorageImpl US;
 
@@ -34,14 +34,13 @@ public class LoginServlet extends HttpServlet {
         PrintWriter pw = resp.getWriter();
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        //pw.println("<body>");
         HttpSession session = req.getSession(true);
         if(US.login(login, password)) {
             User currentUser = (User) session.getAttribute("user");
             try {
                 if (currentUser == null) {
                     pw.println("<h1> You have successfully logged in.</h1>");
-                    currentUser = US.currentUser;
+                    currentUser = US.getCurrentUser();
                     session.setAttribute("user", currentUser);
                 }
                 else {
@@ -56,7 +55,6 @@ public class LoginServlet extends HttpServlet {
         }
         else
             pw.println("<h1> Invalid login or password.</h1>");
-        //pw.println("</body>");
         System.out.println(session.getAttribute("user"));
     }
 }

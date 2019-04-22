@@ -12,15 +12,21 @@ public class UserStorageImpl implements UserStorage{
     @Autowired
     private UserAccessService uas;
 
-    public User currentUser;
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    private User currentUser;
 
     public UserStorageImpl(){
 
     }
     @Override
     public boolean login(String login, String password) {
-        //PreparedStatement stmt = null;
-        //ResultSet rs = null;
         if((currentUser = uas.getUserByLogin(login))!= null) {
             if(currentUser.checkPassword(password)) {
                 return true;

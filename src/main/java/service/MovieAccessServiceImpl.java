@@ -83,7 +83,7 @@ public class MovieAccessServiceImpl implements MovieAccessService {
     @Transactional
     public boolean addReview(Review review){
         rr.save(review);
-        return false;
+        return true;
     }
 
     @Override
@@ -102,11 +102,19 @@ public class MovieAccessServiceImpl implements MovieAccessService {
 
     @Override
     @Transactional
-    public boolean delReviewById(long id){
-        Review r = rr.findOne(id);
-        em.remove(r);
+    public boolean delReviewById(long id, User user){
+        Review r;
+        if(user.checkAdmin()) {
+            r = rr.findOne(id);
+        }
+        else{
+            r = rr.findMyReviewById(user.getlogin(), id);
+        }
+        if(r == null)
+            return false;
+        rr.delete(r);
         em.flush();
-        return false;
+        return true;
     }
 
 }

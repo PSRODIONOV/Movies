@@ -18,7 +18,6 @@ public class MovieFilterDto implements Filter{
         HttpSession session = null;
 
         session = req.getSession(false);
-        System.out.println(session + " Here");
         if(session != null) {
             User user = (User) session.getAttribute("user");
             if (user != null) {
