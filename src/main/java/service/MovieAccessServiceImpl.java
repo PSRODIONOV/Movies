@@ -91,7 +91,7 @@ public class MovieAccessServiceImpl implements MovieAccessService {
     public boolean updateReview(Review review){
         em.merge(review);
         em.flush();
-        return false;
+        return true;
     }
 
     @Override
