@@ -89,8 +89,7 @@ public class MovieAccessServiceImpl implements MovieAccessService {
     @Override
     @Transactional
     public boolean updateReview(Review review){
-        em.merge(review);
-        em.flush();
+        rr.updateReview(review.getText(), review.getReview_id());
         return true;
     }
 
